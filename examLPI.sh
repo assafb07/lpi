@@ -2,7 +2,7 @@
 #Created by Andrey Pautov
 #1200km@gmail.com
 #All questions of exam in this code are functions.
-
+#Version 2.7
 #list of all queistions
 
 
