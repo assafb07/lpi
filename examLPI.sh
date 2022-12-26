@@ -4574,6 +4574,7 @@ onemore
 }
 
 #Start!
+clear
 open
 #Created by Andrey Pautov
 #1200km@gmail.com
