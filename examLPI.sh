@@ -2247,7 +2247,7 @@ done | shuf
 }
 
 echo -e "\e[0;36mQUESTION:41\e[0m"
-echo -e "\e[0;36mEnter head of question: Which of the following DNS record types hold an IP address? (Choose two.)\e[0m"
+echo -e "\e[0;36mWhich of the following DNS record types hold an IP address? (Choose two.)\e[0m"
 declare -a my_array
 readarray -t my_array < <(lines);
 declare -i cnt
@@ -2270,7 +2270,7 @@ else
 echo -e "\e[0;31mWrong! \e[0m"
 fi
 echo -e "\e[0;36mQUESTION: 41\e[0m"
-echo -e "\e[0;36mEnter head of question: Which of the following DNS record types hold an IP address? (Choose two.)\e[0m"
+echo -e "\e[0;36mWhich of the following DNS record types hold an IP address? (Choose two.)\e[0m"
 cnt=0
 for c in {0..4}; do
 tmp2="${chars[$cnt]}" 
