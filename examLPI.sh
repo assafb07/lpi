@@ -4533,6 +4533,9 @@ fi
 function onemore(){
 read yn	
 if [[ $yn == "y" ]]; then
+counter=0
+counter_all=0
+count=1
 open
 elif [[ $yn == "n" ]]; then
 echo "Good bye!"
