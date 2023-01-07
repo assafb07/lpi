@@ -106,11 +106,11 @@ class BoxApp(App):
             answer_check ="Right!"
             print(answer_check)
             self.popup.dismiss()
-            return 
+            return
         answer_check = "Wrong!"
         print(answer_check)
         self.popup.dismiss()
-        return 
+        return
 
     def build(self):
         """build function"""
@@ -148,12 +148,8 @@ class BoxApp(App):
             self.popup = Popup(title ='Test popup',
                                content = main_boxlayout, auto_dismiss = False)
             self.popup.open()
-            
-
-
 if __name__ == "__main__":
     BoxApp().run()
-    
 #def random_e(rangenum):
 #    """random questions function"""
 #    global VAR_NUMBER
