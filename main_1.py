@@ -1,21 +1,23 @@
-#!/usr/bin/python3
-#pylint:disable=E1101,E0611
-"""LPI exam simulator Application for Android"""
+""" LPI exam simulator """
 import random
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.popup import Popup
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import StringProperty
-with open('qst.txt', "r", encoding="utf-8") as file:
+import sys
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QLabel
+from PyQt6.QtWidgets import QLineEdit
+from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtWidgets import QCheckBox
+from PyQt6.QtWidgets import QPushButton
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtWidgets import QVBoxLayout
+
+with open('qst.txt', "r", encoding="UTF-8") as file:
     text_lines = [line[:-1] for line in file]
 
 def nums(text):
     """ function scans question numbers from text """
     num = []
     for line in text:
-        if len(line) <=2 and len(line) > 0 and line != " ":
+        if 2 >= len(line) > 0 and line != " ":
             num.append(line)
     return num
 
@@ -26,7 +28,7 @@ def bodies(text):
     for line in text:
         if len(line) < 1 or line[0:2] == "Ex":
             continue
-        if line[0:4] =="FILL":
+        if line[0:4] == "FILL":
             body.append("Print your answer here: ")
             bodylist.append(body)
             body = []
@@ -58,13 +60,13 @@ def headers(text):
             header = header + line
     return headerlist
 
-ra_pl = [[1,5],[2],[4],[4],[2],[4],[5],[2,3,5],[5],[5],[5],[1],[1],[2],
-         [1,2,5],[2,4],[],[2],[4],[4,5],[4],[5],[4],[2], #list of right answers
-         [2],[2],[4],[3],[5],[1],[1,2,5],[2],[4,5],[1],
-         [2,5],[1],[5],[1],[2],[0],[2,4],[5],[5],[4],[5],[4],[5],[4],[3],
-         [3,5],[3,4],[4],[2,3],[2,5],[3],[0],[4],[3],[1,5],[1],
-         [1],[5],[0],[2],[2],[3],[1],[5],[2],[3],[1,2],[3],[3],[4],
-         [1,5],[5],[2],[4],[2,4,5],[3]]
+ra_pl = [[1, 5], [2], [4], [4], [2], [4], [5], [3, 5], [5], [5], [5], [1], [1], [2],
+         [1, 2, 5], [2, 4], [], [2], [4], [4, 5], [4], [5], [4], [2],  # list of right answers
+         [2], [2], [4], [3], [5], [1], [1, 2, 5], [2], [4, 5], [1],
+         [2, 5], [1], [5], [1], [2], [0], [2, 4], [5], [5], [4], [5], [4], [1, 5], [4], [3],
+         [3, 5], [3, 4], [4], [2, 3], [2, 5], [3], [0], [4], [3], [1, 5], [1],
+         [1], [5], [0], [2], [2], [3], [1], [5], [2], [3], [1, 2], [3], [3], [4],
+         [1, 5], [5], [2], [4], [2, 4, 5], [3]]
 
 def question(loop_number):
     """function creates question"""
@@ -76,74 +78,182 @@ def question(loop_number):
     bodyt = bodies(text_lines)[loop_number]
     ra_answ = []
     for i in ra_pl[loop_number]:
-        ra_answ.append(bodyt[i-1])
+        ra_answ.append(bodyt[i - 1])
     random.shuffle(bodyt)
-    body=[]
+    body = []
     counter = 0
     for i in bodyt:
         if i in ra_answ:
             right_answerc += chars[counter]
-            body.append(chars[counter]+i)
+            body.append(chars[counter] + i)
             counter += 1
         else:
-            body.append(chars[counter]+i)
+            body.append(chars[counter] + i)
             counter += 1
     return num, header, body, right_answerc
 
-class BoxApp(App):
-    """Main class"""
-    right_answer = StringProperty("string")
-    def build(self):
-        """build function"""
-        open_button = Button(text = "Open exam", size_hint = (0.2, 0.2),
-                             pos_hint = {"center_x":0.5, "center_y":0.5},
-                             on_press = self.open_popup_window)
-        return open_button
-    def open_popup_window(self, instance):
-        """open popup function"""
-        def random_range(range_num):
-            """open random range function"""
-            rangelist = list(range(range_num))
-            random.shuffle(rangelist)
-            filllist = [17, 40, 56, 63]
-            for i in rangelist:
-                if i in filllist:
-                    continue
-                main_boxlayout = BoxLayout(orientation='vertical')
-                num, header, body, self.right_answer = question(i)
-                self.popup = Popup(title ='Test popup',
-                                   content = main_boxlayout, auto_dismiss = False)
-                main_boxlayout.add_widget(Label(text = str(num))) #question number
-                main_boxlayout.add_widget(Label(text = str(header))) #question header
-                main_boxlayout.add_widget(Label(text = str(self.right_answer))) #right answer
-                main_label = (Label(text = "Your input"))
-                main_boxlayout.add_widget(main_label)
-                button1 = (Button(text = str(body[0])))
-                button1.bind(on_press = self.press)
-                button2 = (Button(text = str(body[1])))
-                button2.bind(on_press = self.press)
-                button3 = (Button(text = str(body[2])))
-                button3.bind(on_press = self.press)
-                button4 = (Button(text = str(body[3])))
-                button4.bind(on_press = self.press)
-                button5 = (Button(text = str(body[4])))
-                button5.bind(on_press = self.press)
-                button6 = (Button(text = "Next question" ))
-                button6.bind(on_release = self.popup.dismiss)
-                main_boxlayout.add_widget(button1)
-                main_boxlayout.add_widget(button2)
-                main_boxlayout.add_widget(button3)
-                main_boxlayout.add_widget(button4)
-                main_boxlayout.add_widget(button5)
-                main_boxlayout.add_widget(button6)
-                self.popup.open()
-        random_range(80)
-    def press(self, obj):
-        """button press function"""
-        print("self.a="+self.right_answer)
-        user_answer = str(obj.text)[0]
-        print(user_answer)
-        user_answer = ""
-        obj.text = self.right_answer
-if __name__ == "__main__":
-    BoxApp().run()
+def next():
+    window2.close()
+
+class QuestionFill(QMainWindow):
+    def __init__(self):
+        super(QuestionFill, self).__init__()
+        self.setMinimumSize(300, 300)
+        self.setWindowTitle(num)
+        self.label1 = QLabel(header)
+        self.label = QLabel()
+        self.button6 = QPushButton("Submit")
+        self.button7 = QPushButton("Next question")
+        self.input = QLineEdit()
+        self.input.textChanged.connect(self.label.setText)
+        layout = QVBoxLayout()
+        layout.addWidget(self.label1)
+        layout.addWidget(self.label)
+        layout.addWidget(self.input)
+        layout.addWidget(self.button6)
+        layout.addWidget(self.button7)
+        self.button6.clicked.connect(self.submitfill)
+        self.button7.clicked.connect(next)
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
+
+    def submitfill(self):
+        if num == "Question:17":
+            if self.label.text() == "for":
+                self.label.setText("Right!")
+            else:
+                self.label.setText("Wrong!")
+        elif num == "Question:40":
+            r_a = "\\"
+            if self.label.text() == r_a:
+                self.label.setText("Right!")
+            else:
+                self.label.setText("Wrong!")
+        elif num == "Question:56":
+            if self.label.text() == "R":
+                self.label.setText("Right!")
+            else:
+                self.label.setText("Wrong!")
+        elif num == "Question:63":
+            if self.label.text() == "man":
+                self.label.setText("Right!")
+            else:
+                self.label.setText("Wrong!")
+
+class MainWindow(QMainWindow):
+
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.user_answ = []
+        self.ra_counter = 0
+        self.setMinimumSize(300, 300)
+        # self.setMaximumSize(300, 300)
+        self.setWindowTitle(num)
+        self.label = QLabel(header)
+        self.label2 = QLabel("")
+        self.button1 = QCheckBox(body[0])
+        self.button2 = QCheckBox(body[1])
+        self.button3 = QCheckBox(body[2])
+        self.button4 = QCheckBox(body[3])
+        self.button5 = QCheckBox(body[4])
+        self.button6 = QPushButton("Submit")
+        self.button7 = QPushButton("Next question")
+        layout = QVBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.label2)
+        self.label.setScaledContents(True)
+        self.label2.setScaledContents(True)
+        layout.addWidget(self.button1)
+        layout.addWidget(self.button2)
+        layout.addWidget(self.button3)
+        layout.addWidget(self.button4)
+        layout.addWidget(self.button5)
+        layout.addWidget(self.button6)
+        layout.addWidget(self.button7)
+        self.button1.setCheckable(True)
+        self.button2.setCheckable(True)
+        self.button3.setCheckable(True)
+        self.button4.setCheckable(True)
+        self.button5.setCheckable(True)
+        self.button6.setCheckable(True)
+        self.button7.setCheckable(True)
+        self.button1.clicked.connect(self.user_answer1)
+        self.button2.clicked.connect(self.user_answer2)
+        self.button3.clicked.connect(self.user_answer3)
+        self.button4.clicked.connect(self.user_answer4)
+        self.button5.clicked.connect(self.user_answer5)
+        self.button6.clicked.connect(self.submit)
+        self.button7.clicked.connect(self.next)
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
+
+    def user_answer1(self, checked):
+        if checked == True:
+            self.user_answ.append(body[0][0])
+            return self.user_answ
+        if checked == False:
+            self.user_answ.remove(body[0][0])
+
+    def user_answer2(self, checked):
+        if checked == True:
+            self.user_answ.append(body[1][0])
+            return self.user_answ
+        if checked == False:
+            self.user_answ.remove(body[1][0])
+
+    def user_answer3(self, checked):
+        if checked == True:
+            self.user_answ.append(body[2][0])
+            return self.user_answ
+        if checked == False:
+            self.user_answ.remove(body[2][0])
+
+    def user_answer4(self, checked):
+        if checked == True:
+            self.user_answ.append(body[3][0])
+            return self.user_answ
+        if checked == False:
+            self.user_answ.remove(body[3][0])
+
+    def user_answer5(self, checked):
+        if checked == True:
+            self.user_answ.append(body[4][0])
+            return self.user_answ
+        if checked == False:
+            self.user_answ.remove(body[4][0])
+
+    def next(self):
+        window.close()
+
+    def submit(self):
+        self.user_answ.sort()
+        answ = "".join(self.user_answ)
+        if len(answ) == len(right_a):
+            if answ == right_a:
+                self.label2.setText("Right!")
+                self.ra_counter += 1
+            else:
+                self.label2.setText("Wrong!")
+        elif len(answ) < len(right_a):
+            print("Chose more answers")
+        elif len(answ) > len(right_a):
+            print("Choose less answers")
+app = QApplication(sys.argv)
+rangenum = 80
+rangelist = list(range(1, rangenum + 1))
+# rangelist = list(range(56,57))
+random.shuffle(rangelist)
+filllist = [17, 40, 56, 63]
+for i in rangelist:
+    if i in filllist:
+        num, header, body, right_a = question(i)
+        window2 = QuestionFill()
+        window2.show()
+        app.exec()
+    else:
+        num, header, body, right_a = question(i)
+        window = MainWindow()
+        window.show()
+        app.exec()
