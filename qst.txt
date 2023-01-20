@@ -451,7 +451,8 @@ E. One log file per running service.
 Explanation/Reference:
 
 47
-A new server needs to be installed to host services for a period of several years. Throughout this time, the server should receive important security updates from its Linux distribution.
+A new server needs to be installed to host services for a period of several years. 
+Throughout this time, the server should receive important security updates from its Linux distribution.
 Which of the following Linux distributions meet these requirements? (Choose two.)
 A. Ubuntu Linux LTS
 B. Fedora Linux
@@ -635,7 +636,7 @@ Explanation/Reference:
 Which of the following examples shows the general structure of a for loop in a shell script?
 A. for *.txt as file => echo $file
 B. for *.txt ( echo $i )
-C. for file in *.txt \ndo\necho $i\ndone
+C. for file in *.txt \necho $i\ndone
 D. for ls *.txt exec {} \;
 E. foreach @{file} {echo $i
 Explanation/Reference:
