@@ -9,7 +9,12 @@ from PyQt6.QtWidgets import QCheckBox
 from PyQt6.QtWidgets import QPushButton
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtWidgets import QVBoxLayout
-
+from PyQt6.QtCore import Qt
+global ra_counter
+global wrong_answ
+wrong_answ = []
+ra_counter = 0
+all_counter = 0
 with open('qst.txt', "r", encoding="UTF-8") as file:
     text_lines = [line[:-1] for line in file]
 
@@ -94,16 +99,19 @@ def question(loop_number):
 
 def next():
     window2.close()
-
+def closeit(self):
+    sys.exit()    
 class QuestionFill(QMainWindow):
     def __init__(self):
         super(QuestionFill, self).__init__()
         self.setMinimumSize(300, 300)
         self.setWindowTitle(num)
         self.label1 = QLabel(header)
+        self.label1.setWordWrap(True)
         self.label = QLabel()
         self.button6 = QPushButton("Submit")
         self.button7 = QPushButton("Next question")
+        self.button8 = QPushButton("Stop and Exit")
         self.input = QLineEdit()
         self.input.textChanged.connect(self.label.setText)
         layout = QVBoxLayout()
@@ -112,45 +120,80 @@ class QuestionFill(QMainWindow):
         layout.addWidget(self.input)
         layout.addWidget(self.button6)
         layout.addWidget(self.button7)
+        layout.addWidget(self.button8)
+        self.button8.setCheckable(True)
         self.button6.clicked.connect(self.submitfill)
         self.button7.clicked.connect(next)
+        self.button8.clicked.connect(closeit)
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
-
+    def closeit(self):
+        sys.exit()
     def submitfill(self):
+        global ra_counter
+        global wrong_answ
         if num == "Question:17":
             if self.label.text() == "for":
                 self.label.setText("Right!")
+                ra_counter += 1
             else:
                 self.label.setText("Wrong!")
+                wrong_answ.append(17)
         elif num == "Question:40":
             r_a = "\\"
             if self.label.text() == r_a:
                 self.label.setText("Right!")
+                ra_counter += 1
             else:
                 self.label.setText("Wrong!")
+                wrong_answ.append(40)
         elif num == "Question:56":
             if self.label.text() == "R":
                 self.label.setText("Right!")
+                ra_counter += 1
             else:
                 self.label.setText("Wrong!")
+                wrong_answ.append(56)
         elif num == "Question:63":
             if self.label.text() == "man":
                 self.label.setText("Right!")
+                ra_counter += 1
             else:
                 self.label.setText("Wrong!")
+                wrong_answ.append(63)
+class EndWindow(QMainWindow):
+    def __init__(self):
+        global ra_counter
+        global wrong_answ
+        super(EndWindow, self).__init__()
+        grade = ra_counter * 20
+        max_grade = all_counter * 20
 
+        self.setWindowTitle("End page of exam")
+        self.label = QLabel("Congratilations!")
+        self.label1 = QLabel("Total questions answered: " + str(all_counter))
+        self.label2 = QLabel("Right answers: " + str(ra_counter))
+        self.label3 = QLabel("Your grade: " + str(grade) +"/"+str(max_grade))
+        self.label4 = QLabel("Wrong answers in these questions: " + str(wrong_answ))
+        layout = QVBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.label1)
+        layout.addWidget(self.label2)
+        layout.addWidget(self.label3)
+        layout.addWidget(self.label4)
+        container = QWidget()            
+        container.setLayout(layout)      
+        self.setCentralWidget(container)
+        
 class MainWindow(QMainWindow):
-
     def __init__(self):
         super(MainWindow, self).__init__()
         self.user_answ = []
-        self.ra_counter = 0
-        self.setMinimumSize(300, 300)
-        # self.setMaximumSize(300, 300)
         self.setWindowTitle(num)
         self.label = QLabel(header)
+        self.label.setWordWrap(True)
+        self.label.setScaledContents(True)
         self.label2 = QLabel("")
         self.button1 = QCheckBox(body[0])
         self.button2 = QCheckBox(body[1])
@@ -159,6 +202,7 @@ class MainWindow(QMainWindow):
         self.button5 = QCheckBox(body[4])
         self.button6 = QPushButton("Submit")
         self.button7 = QPushButton("Next question")
+        self.button8 = QPushButton("Stop and Exit")
         layout = QVBoxLayout()
         layout.addWidget(self.label)
         layout.addWidget(self.label2)
@@ -171,6 +215,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.button5)
         layout.addWidget(self.button6)
         layout.addWidget(self.button7)
+        layout.addWidget(self.button8)
         self.button1.setCheckable(True)
         self.button2.setCheckable(True)
         self.button3.setCheckable(True)
@@ -178,6 +223,7 @@ class MainWindow(QMainWindow):
         self.button5.setCheckable(True)
         self.button6.setCheckable(True)
         self.button7.setCheckable(True)
+        self.button8.setCheckable(True)
         self.button1.clicked.connect(self.user_answer1)
         self.button2.clicked.connect(self.user_answer2)
         self.button3.clicked.connect(self.user_answer3)
@@ -185,6 +231,7 @@ class MainWindow(QMainWindow):
         self.button5.clicked.connect(self.user_answer5)
         self.button6.clicked.connect(self.submit)
         self.button7.clicked.connect(self.next)
+        self.button8.clicked.connect(self.closeit)
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
@@ -226,24 +273,75 @@ class MainWindow(QMainWindow):
 
     def next(self):
         window.close()
+    def closeit(self):
+        sys.exit()
 
     def submit(self):
+        global ra_counter
+        global wrong_answ
         self.user_answ.sort()
         answ = "".join(self.user_answ)
         if len(answ) == len(right_a):
             if answ == right_a:
                 self.label2.setText("Right!")
-                self.ra_counter += 1
+                ra_counter += 1
             else:
                 self.label2.setText("Wrong!")
+                wrong_answ.append(i+1)
         elif len(answ) < len(right_a):
             print("Chose more answers")
         elif len(answ) > len(right_a):
             print("Choose less answers")
+class OpenWindow(QMainWindow):
+    def __init__(self):
+        super(OpenWindow, self).__init__()
+        def trainer():
+            global var
+            var = 80
+            window3.close()
+        def exam():
+            global var
+            var = 40
+            window3.close()
+        def closeit():
+            sys.exit()
+        self.setWindowTitle("LPI exam Simulator")
+        self.label = QLabel("""Welcome to LPI 016-160 exam simulator/trainer""")
+        self.label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+        self.label1 = QLabel("""Trainer mode includes all 80 questions in random sequence. If you want to open a trainer mode press "Trainer" button""")
+        self.label1.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+        self.label1.setWordWrap(True)
+        self.label2 = QLabel("""Exam mode is 40 random questions with time counter. If you want to open a exam mode 
+         press "Exam" button""")
+        self.label2.setWordWrap(True)
+        self.button1 = QPushButton("Trainer")
+        self.button2 = QPushButton("Exam")
+        self.button3 = QPushButton("Stop and Exit")
+        layout = QVBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.label1)
+        layout.addWidget(self.button1)
+        layout.addWidget(self.label2)
+        layout.addWidget(self.button2)
+        layout.addWidget(self.button3)
+        self.button1.setCheckable(True)
+        self.button2.setCheckable(True)
+        self.button3.setCheckable(True)
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
+        self.button1.clicked.connect(trainer)
+        self.button2.clicked.connect(exam)
+        self.button3.clicked.connect(closeit)
+
 app = QApplication(sys.argv)
-rangenum = 80
+window3 = OpenWindow()
+window3.show()
+app.exec()
+
+rangenum = var
 rangelist = list(range(1, rangenum + 1))
-# rangelist = list(range(56,57))
+    # rangelist = list(range(56,57))
 random.shuffle(rangelist)
 filllist = [17, 40, 56, 63]
 for i in rangelist:
@@ -251,9 +349,15 @@ for i in rangelist:
         num, header, body, right_a = question(i)
         window2 = QuestionFill()
         window2.show()
+        all_counter += 1
         app.exec()
     else:
-        num, header, body, right_a = question(i)
-        window = MainWindow()
-        window.show()
-        app.exec()
+         num, header, body, right_a = question(i)
+         window = MainWindow()
+         window.show()
+         all_counter += 1
+         app.exec()
+
+window4 = EndWindow()
+window4.show()
+app.exec()
