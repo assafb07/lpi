@@ -12,8 +12,12 @@ from PyQt6.QtWidgets import QWidget
 from PyQt6.QtWidgets import QVBoxLayout
 from PyQt6.QtWidgets import QGridLayout
 from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QTime
 global RA_COUNTER
 global wrong_answ
+global time_elapsed
+time_elapsed = 0
 wrong_answ = []
 RA_COUNTER = 0
 all_counter = 0
@@ -98,9 +102,7 @@ def question(loop_number):
             body.append(chars[counter] + i)
             counter += 1
     return num, header, body, right_answerc
-def next():
-    """next question function"""
-    window2.close()
+
 def closeit():
     """close app function"""
     sys.exit()
@@ -109,10 +111,15 @@ class QuestionFill(QMainWindow):
     def __init__(self):
         """constructor"""
         super(QuestionFill, self).__init__()
-        self.setFixedSize(600, 350)
-        self.setWindowTitle(num)
+        self.setFixedSize(620, 350)
+        self.setWindowTitle((num+"          "+str(all_counter)+"/"+str(var)))
         self.label1 = QLabel(header)
         self.label1.setWordWrap(True)
+        self.timer = QTimer(self)
+        self.timer.setInterval(1000)
+        self.time_label = QLabel(self)
+        self.time_label.setText("Time elapsed: __:__:__")
+        self.timer.timeout.connect(self.update_time)
         self.label = QLabel()
         self.button6 = QPushButton("Submit")
         self.button6.resize(100, 40)
@@ -129,16 +136,34 @@ class QuestionFill(QMainWindow):
         layout.addWidget(self.button6)
         layout.addWidget(self.button7)
         layout.addWidget(self.button8)
+        layout.addWidget(self.time_label)
         self.button8.setCheckable(True)
         self.button6.clicked.connect(self.submit_fill)
-        self.button7.clicked.connect(next)
-        self.button8.clicked.connect(closeit)
+        self.button7.clicked.connect(self.next)
+        self.button8.clicked.connect(self.closeit)
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
+        self.timer.start()
+
+    def update_time(self):
+        global time_elapsed
+        time_elapsed += 1
+        time = QTime(0, 0, 0)
+        time = time.addSecs(time_elapsed)
+        self.time_label.setText("Time elapsed: {}".format(time.toString("hh:mm:ss")))
+
     def closeit(self):
         """close app function"""
         sys.exit()
+
+    def next(self):
+        """next question function"""
+        if self.label.text() == "Wrong!" or self.label.text() == "Right!":
+            self.timer.stop()
+            window2.close()
+        else:
+            self.label.setText("""Press "Submit" button first""")
 
     def submit_fill(self):
         """submit function"""
@@ -178,13 +203,18 @@ class EndWindow(QMainWindow):
     """end window class"""
     def __init__(self):
         """constructor"""
-        self.setFixedSize(600, 350)
+        super(EndWindow, self).__init__()
+        self.setFixedSize(620, 350)
         global RA_COUNTER
         global wrong_answ
-        super(EndWindow, self).__init__()
         grade = RA_COUNTER * 20
         max_grade = all_counter * 20
         self.setWindowTitle("End page of exam")
+        self.timer = QTimer(self)
+        self.timer.setInterval(1000)
+        self.time_label = QLabel(self)
+        self.time_label.setText("Time elapsed: __:__:__")
+        self.timer.timeout.connect(self.update_time)
         self.label = QLabel("Congratilations!")
         self.label1 = QLabel("Total questions answered: " + str(all_counter))
         self.label2 = QLabel("Right answers: " + str(RA_COUNTER))
@@ -196,19 +226,33 @@ class EndWindow(QMainWindow):
         layout.addWidget(self.label2)
         layout.addWidget(self.label3)
         layout.addWidget(self.label4)
+        layout.addWidget(self.time_label)
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
+        self.timer.start()
+        #self.timer.stop()
+
+    def update_time(self):
+        global time_elapsed
+        time = QTime(0, 0, 0)
+        time = time.addSecs(time_elapsed)
+        self.time_label.setText("Time elapsed: {}".format(time.toString("hh:mm:ss")))
 
 class MainWindow(QMainWindow):
     """main window class"""
     def __init__(self):
         """constructor"""
         super(MainWindow, self).__init__()
-        self.setFixedSize(600, 350)
+        self.timer = QTimer(self)
+        self.timer.setInterval(1000)
+        self.setFixedSize(620, 350)
         self.user_answ = []
-        self.setWindowTitle(num)
+        self.setWindowTitle(num+"          "+str(all_counter)+"/"+str(var))
         self.label = QLabel(header)
+        self.time_label = QLabel(self)
+        self.time_label.setText("Time elapsed: __:__:__")
+        self.timer.timeout.connect(self.update_time)
         self.label.resize(540, 50)
         self.label.setWordWrap(True)
         self.label2 = QLabel("")
@@ -240,9 +284,7 @@ class MainWindow(QMainWindow):
         self.button8.resize(100, 40)
         layout = QGridLayout()
         layout.addWidget(self.label, 0, 0, 3, 5, alignment=Qt.AlignmentFlag.AlignVCenter)
-        #self.label.setScaledContents(True)
-        self.label2.setScaledContents(True)
-        layout.addWidget(self.label2 , 3, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.label2, 3, 0, 1, 3, alignment=Qt.AlignmentFlag.AlignVCenter)
         layout.addWidget(self.button1, 4, 0, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(self.button2, 5, 0, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addWidget(self.button3, 6, 0, alignment=Qt.AlignmentFlag.AlignRight)
@@ -256,6 +298,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.button6, 9, 1)
         layout.addWidget(self.button7, 9, 2)
         layout.addWidget(self.button8, 9, 3)
+        layout.addWidget(self.time_label,10,1)
         self.button1.setCheckable(True)
         self.button2.setCheckable(True)
         self.button3.setCheckable(True)
@@ -275,6 +318,14 @@ class MainWindow(QMainWindow):
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
+        self.timer.start()
+
+    def update_time(self):
+        global time_elapsed
+        time_elapsed += 1
+        time = QTime(0, 0, 0)
+        time = time.addSecs(time_elapsed)
+        self.time_label.setText("Time elapsed: {}".format(time.toString("hh:mm:ss")))
 
     def user_answer1(self, checked):
         """user answer function"""
@@ -316,8 +367,13 @@ class MainWindow(QMainWindow):
         if checked == False:
             self.user_answ.remove(body[4][0])
     def next(self):
-        """next function"""
-        window.close()
+        """next question function"""
+        if self.label2.text() == "Wrong!" or self.label2.text() == "Right!":
+            self.timer.stop()
+            window.close()
+        else:
+            self.label2.setText("""Press "Submit" button first""")
+
     def closeit(self):
         """close app function"""
         sys.exit()
@@ -335,9 +391,9 @@ class MainWindow(QMainWindow):
                 self.label2.setText("Wrong!")
                 wrong_answ.append(i + 1)
         elif len(answ) < len(right_a):
-            print("Chose more answers")
+            self.label2.setText("Chose more answers")
         elif len(answ) > len(right_a):
-            print("Choose less answers")
+            self.label2.setText("Choose less answers")
 
 
 class OpenWindow(QMainWindow):
@@ -404,7 +460,7 @@ app.exec()
 
 rangenum = var
 rangelist = list(range(1, rangenum + 1))
-#rangelist = list(range(40, 42))
+#rangelist = list(range(17, 19))
 random.shuffle(rangelist)
 filllist = [17, 40, 56, 63]
 for i in rangelist:
