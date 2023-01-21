@@ -1,4 +1,5 @@
 # pylint: disable=E0611
+########### Created by Andrey Pautov. 1200km@gmail.com ####################
 """ LPI exam simulator """
 import random
 import sys
@@ -70,7 +71,7 @@ def headers(text):
         else:
             header = header + line
     return headerlist
-
+########### Created by Andrey Pautov. 1200km@gmail.com ####################
 ra_pl = [[1, 5], [2], [4], [4], [2], [4], [5], [3, 5], [5], [5], [5], [1], [1], [2],
          [1, 2, 5], [2, 4], [], [2], [4], [4, 5], [4], [5], [4], [2],  # list of right answers
          [2], [2], [4], [3], [5], [1], [1, 2, 5], [2], [4, 5], [1],
@@ -157,6 +158,7 @@ class QuestionFill(QMainWindow):
         """close app function"""
         sys.exit()
 
+    ########### Created by Andrey Pautov. 1200km@gmail.com ####################
     def next(self):
         """next question function"""
         if self.label.text() == "Wrong!" or self.label.text() == "Right!":
@@ -351,6 +353,7 @@ class MainWindow(QMainWindow):
         if checked == False:
             self.user_answ.remove(body[2][0])
 
+    ########### Created by Andrey Pautov. 1200km@gmail.com ####################
     def user_answer4(self, checked):
         """user answer function"""
         if checked == True:
@@ -419,7 +422,8 @@ class OpenWindow(QMainWindow):
             sys.exit()
 
         self.setWindowTitle("LPI exam Simulator")
-        self.label = QLabel("""Welcome to LPI 016-160 exam simulator/trainer""")
+        self.label = QLabel("""Welcome to LPI 016-160 exam simulator/trainer
+        created by Andrey Pautov, 1200km@gmail.com""")
         self.label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
         self.label1 = QLabel(
             """Trainer mode includes all 80 questions in random sequence. 
@@ -451,8 +455,7 @@ class OpenWindow(QMainWindow):
         self.button1.clicked.connect(trainer)
         self.button2.clicked.connect(exam)
         self.button3.clicked.connect(closeit)
-
-
+########### Created by Andrey Pautov. 1200km@gmail.com ####################
 app = QApplication(sys.argv)
 window3 = OpenWindow()
 window3.show()
@@ -480,3 +483,4 @@ for i in rangelist:
 window4 = EndWindow()
 window4.show()
 app.exec()
+########### Created by Andrey Pautov. 1200km@gmail.com ####################
