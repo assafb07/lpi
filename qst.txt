@@ -147,7 +147,7 @@ Explanation/Reference:
 
 
 16
-Which of the following <i><b>tar</b></i>options handle compression? (Choose two.)
+Which of the following <i><b>tar</b></i> options handle compression? (Choose two.)
 A. -bz
 B. -z
 C. -g
