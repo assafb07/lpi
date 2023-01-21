@@ -9,8 +9,7 @@ E. Solid state disks provide faster access to stored data than hard disks.
 Explanation/Reference:
 
 2
-Reverse DNS assigns hostnames to IP addresses. How is the name of the IP address 198.51.100.165 stored
-on a DNS server?
+Reverse DNS assigns hostnames to IP addresses. How is the name of the IP address 198.51.100.165 stored on a DNS server?
 A. In the A record for 165.100.51.198.ipv4.arpa.
 B. In the PTR record for 165.100.51.198.in-addr.arpa.
 C. In the RNAME record for 198-51-100-165.rev.arpa.
@@ -38,14 +37,14 @@ D. CentOS
 E. openSUSE
 Explanation/Reference:
 5
-What information can be displayed by top?
+
+What information can be displayed by <i><b>top</b></i>?
 A. Existing files, ordered by their size.
 B. Running processes, ordered by CPU or RAM consumption.
 C. User accounts, ordered by the number of logins.
 D. User groups, ordered by the number of members.
 E. User accounts, ordered by the number of files.
 Explanation/Reference:
-
 
 6
 Which of the following commands can be used to resolve a DNS name to an IP address?
@@ -61,18 +60,18 @@ Explanation/Reference:
 Which of the following outputs comes from the command free?
 A. 21:04:15 up 14 days, 7:43, 3 users, load average: 0.89, 1.00, 0.99
 
-B.  avg-cpu:   %user    %nice    %system    %iowait    %steal    %id  \n34.04      0.03       13.38          1.06          0.00      50.99
+B.  avg-cpu:   %user    %nice    %system    %iowait    %steal    %id  <br>           34.04      0.03       13.38          1.06          0.00      50.99
 
-C.  Filesystem                           Size        Used        Avail      Use%       Mounted on /dev/mapper/vg_ssd-root \n   25G         20G         3.6G      85%             /
+C.  Filesystem                           Size        Used        Avail      Use%       Mounted on /dev/mapper/vg_ssd-root<br>  25G         20G         3.6G      85%             /
 
 D.  1.8M tmp
 
-E.              total               used            free           shared           buff/cache         available Mem: \n  16123128       12565680    2011624    412128          1545824             7180416
+E.              total               used            free           shared           buff/cache         available Mem: <br> 16123128       12565680    2011624    412128          1545824             7180416
 Explanation/Reference:
 
 
 8
-What is true about the dmesg command? (Choose two.)
+What is true about the <i><b>dmesg</b></i> command? (Choose two.)
 A. It traces the execution of a command and shows each step the program carries out.
 B. It sends messages to the command lines of all current user sessions.
 C. It displays the content of the Linux kernel’s ring buffer.
@@ -82,8 +81,8 @@ Explanation/Reference:
 
 
 9
-Which of the following outputs could stem from the command last?
-A.  1 ls \n 2 cat text.txt\n3 logout
+Which of the following outputs could stem from the command <i><b>last</b></i>?
+A.  1 ls <br> 2 cat text.txt<br> 3 logout
 B. Password for user last changed at Sat Mar 31 16:38:57 EST 2018
 C. Last login: Fri Mar 23 10:56:39 2018 from server.example.com
 D. EXT4-fs (dm-7): mounted filesystem with ordered data mode. Opts: (null)
@@ -100,8 +99,7 @@ E. 0
 Explanation/Reference:
 
 11
-Which permissions are set on a regular file once the permissions have been modified with the command
-chmod 654 file.txt?
+Which permissions are set on a regular file once the permissions have been modified with the command  <i><b>chmod 654 file.txt?</b></i>
 A. drw-r-xr--
 B. d—wxr-x--
 C. –wxr-x--x
@@ -117,13 +115,6 @@ C. The user owning a file must be a member of the file’s group.
 D. When a user is deleted, all files owned by the user disappear.
 E. The owner of a file cannot be changed once it is assigned to an owner.
 Explanation/Reference:
-
-
-
-
-
-
-
 
 13
 Which of the following permissions are set on the /tmp/ directory?
@@ -156,7 +147,7 @@ Explanation/Reference:
 
 
 16
-Which of the following tar options handle compression? (Choose two.)
+Which of the following <i><b>tar</b></i>options handle compression? (Choose two.)
 A. -bz
 B. -z
 C. -g
@@ -190,7 +181,7 @@ E. !
 Explanation/Reference:
 
 20
-The current directory contains the following file: -rwxr-xr-x 1 root root 859688 Feb 7 08:15 test.sh
+The current directory contains the following file: -rwxr-xr-x 1 root root 859688 Feb 7 08:15 test.sh <br>
 Given that the file is a valid shell script, how can this script be executed? (Choose two.)
 A. run test.sh
 B. ${test.sh}
@@ -200,7 +191,7 @@ E. bash test.sh
 Explanation/Reference:
 
 21
-Which of the following commands sorts the output of the command export-logs?
+Which of the following commands sorts the output of the command <i><b>export-logs</b></i>?
 A. export-logs < sort
 B. export-logs > sort
 C. export-logs & sort
@@ -208,22 +199,14 @@ D. export-logs | sort
 E. export-logs <> sort
 Explanation/Reference:
 
-
-
-
-
-
-
-
-
 22
-A directory contains the following files: a.txt, b.txt, c.cav. What would be the output of the following shell script?
-for file in *.txt\ndo\n  echo $file\n done
+A directory contains the following files: a.txt, b.txt, c.cav. What would be the output of the following shell script?<br>
+<code>for file in *.txt<br>do<br>      echo $file<br> done</code>
 A. *.txt
 B. a b
 C. c.cav
 D. a.txt
-E. a. txt\nb. Txt
+E. a. txt<br>b. Txt
 Explanation/Reference:
 
 23
@@ -236,7 +219,7 @@ E. find /home foo.txt
 Explanation/Reference:
 
 24
-The current directory contains the following file: -rw-r—r— 1 root exec 24551 Apr 2 12:36 test.sh
+The current directory contains the following file: -rw-r—r— 1 root exec 24551 Apr 2 12:36 test.sh<br>
 The file contains a valid shell script, but executing this file using ./test.sh leads to this error:
 bash: ./test.sh: Permission denied
 What should be done in order to successfully execute the script?
@@ -325,7 +308,7 @@ E. $
 Explanation/Reference:
 
 33
-Which of the following commands are used to get information on the proper use of ls? (Choose two.)
+Which of the following commands are used to get information on the proper use of <i><b>ls</b></i>? (Choose two.)
 A. option ls
 B. usage ls
 C. manual ls
@@ -343,7 +326,7 @@ E. It includes a preview of content for each file in the directory.
 Explanation/Reference:
 
 35
-Running the command rm Downloads leads to the following error: rm: cannot remove ‘Downloads/’: Is a directory. Which of the following commands can be used instead to remove Downloads, assuming Downloads is empty? (Choose two.)
+Running the command <i><b>rm</b></i> Downloads leads to the following error: rm: cannot remove ‘Downloads/’: Is a directory. Which of the following commands can be used instead to remove Downloads, assuming Downloads is empty? (Choose two.)
 A. undir Downloads
 B. rmdir Downloads
 C. dir –r Downloads
@@ -381,8 +364,7 @@ E. /home/Documents
 Explanation/Reference:
 
 39
-A directory contains the following three files: texts 1.txt, texts 2.txt, texts 3.csv
-Which command copies the two files ending in .txt to the /tmp/ directory?
+A directory contains the following three files: texts 1.txt, texts 2.txt, texts 3.csv. Which command copies the two files ending in .txt to the /tmp/ directory?
 A. cp ??.txt /tmp/
 B. cp *.txt /tmp/
 C. cp. \.txt /tmp/
@@ -472,8 +454,7 @@ E. /usr
 Explanation/Reference:
 
 49
-The ownership of the file doku.odt should be changed. The new owner is named tux. Which command
-accomplishes this change?
+The ownership of the file doku.odt should be changed. The new owner is named tux. Which command accomplishes this change?
 A. chmod u=tux doku.odt
 B. newuser doku.odt tux
 C. chown tux doku.odt
@@ -508,7 +489,7 @@ D. A symbolic link can point to a file on another file system.
 E. Only the root user can create hard links.
 Explanation/Reference:
 53
-Which files are the source of the information in the following output? (Choose two.)
+Which files are the source of the information in the following output? (Choose two.)<br>
 uid=1000 (bob) gid=1000 (bob) groups=1000 (bob), 10 (wheel), 150 (wireshark), 989
 (docker), 1001 (libvirt)
 A. /etc/id
@@ -527,13 +508,8 @@ D. Create a new user group.
 E. Lock a user account.
 Explanation/Reference:
 
-
-
-
-
-
 55
-What is true about the su command?
+What is true about the <i><b>su</b></i> command?
 A. It is the default shell of the root account.
 B. It can only be used by the user root.
 C. It runs a shell or command as another user.
@@ -618,11 +594,6 @@ D. rcp /etc/* /root
 E. cp -R /etc/*.* /root
 Explanation/Reference:
 
-
-
-
-
-
 65
 Which of the following commands puts the lines of the file data.csv into alphabetical order?
 A. a..z data.csv
@@ -636,7 +607,7 @@ Explanation/Reference:
 Which of the following examples shows the general structure of a for loop in a shell script?
 A. for *.txt as file => echo $file
 B. for *.txt ( echo $i )
-C. for file in *.txt \necho $i\ndone
+C. for file in *.txt <br> echo $i<br>done
 D. for ls *.txt exec {} \;
 E. foreach @{file} {echo $i
 Explanation/Reference:
@@ -651,10 +622,8 @@ E. $
 Explanation/Reference:
 
 68
-The file script.sh in the current directory contains the following content: 
-#!/bin/bash
-echo $MYVAR
-The following commands are used to execute this script: MYVAR=value / ./script.sh
+The file script.sh in the current directory contains the following content:  <br> #!/bin/bash <br> echo $MYVAR <br>
+The following commands are used to execute this script:  <code>MYVAR=value / ./script.sh</code>
 The result is an empty line instead of the content of the variable MYVAR. How should MYVAR be set in order to make script.sh display the content of MYVAR?
 A. !MYVAR=value
 B. env MYVAR=value
@@ -676,8 +645,7 @@ E. 255
 Explanation/Reference:
 
 70
-Which of the following commands creates the ZIP archive poems.zip containing all files in the current
-directory whose names end in .txt?
+Which of the following commands creates the ZIP archive poems.zip containing all files in the current  directory whose names end in .txt?
 A. zip *.txt > poems.zip
 B. zcat *.txt poems.zip
 C. zip poems.zip *.txt
