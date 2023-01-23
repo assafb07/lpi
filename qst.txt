@@ -60,13 +60,13 @@ Explanation/Reference:
 Which of the following outputs comes from the command free?
 A. 21:04:15 up 14 days, 7:43, 3 users, load average: 0.89, 1.00, 0.99
 
-B.  avg-cpu:   %user    %nice    %system    %iowait    %steal    %id  <br>           34.04      0.03       13.38          1.06          0.00      50.99
+B.  avg-cpu:   %user    %nice    %system  &nbsp;&nbsp;  %iowait  &nbsp;  %steal  &nbsp;&nbsp;  %id  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  34.04 &nbsp; 0.03  &nbsp;  13.38  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  1.06 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  0.00 &nbsp;&nbsp;&nbsp;&nbsp; 50.99
 
-C.  Filesystem                           Size        Used        Avail      Use%       Mounted on /dev/mapper/vg_ssd-root<br>  25G         20G         3.6G      85%             /
+C.  Filesystem                           Size        Used        Avail      Use%       Mounted on /dev/mapper/vg_ssd-root<br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25G &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         20G &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         3.6G &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      85% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             /
 
 D.  1.8M tmp
 
-E.              total               used            free           shared           buff/cache         available Mem: <br> 16123128       12565680    2011624    412128          1545824             7180416
+E. total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; used &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;free &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shared  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buff/cach &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; available_Mem: <br> 16123128 &nbsp;&nbsp;  12565680 &nbsp;&nbsp;  2011624   &nbsp;&nbsp;  412128  &nbsp;&nbsp;  1545824  &nbsp;&nbsp;  7180416
 Explanation/Reference:
 
 
