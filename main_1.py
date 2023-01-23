@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import QPushButton
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtWidgets import QVBoxLayout
 from PyQt6.QtWidgets import QGridLayout
+from PyQt6.QtGui import QFont, QFontDatabase
 from PyQt6.QtCore import Qt
 from PyQt6.QtCore import QTimer
 from PyQt6.QtCore import QTime
@@ -112,7 +113,7 @@ class QuestionFill(QMainWindow):
     def __init__(self):
         """constructor"""
         super(QuestionFill, self).__init__()
-        self.setFixedSize(620, 350)
+        self.setFixedSize(640, 350)
         self.setWindowTitle((num+"          "+str(all_counter)+"/"+str(var)))
         self.label1 = QLabel(header)
         self.label1.setWordWrap(True)
@@ -121,7 +122,7 @@ class QuestionFill(QMainWindow):
         self.time_label = QLabel(self)
         self.time_label.setText("Time elapsed: __:__:__")
         self.timer.timeout.connect(self.update_time)
-        self.label = QLabel()
+        self.label = QLabel("")
         self.button6 = QPushButton("Submit")
         self.button6.resize(100, 40)
         self.button7 = QPushButton("Next question")
@@ -130,14 +131,15 @@ class QuestionFill(QMainWindow):
         self.button8.resize(100, 40)
         self.input = QLineEdit()
         self.input.textChanged.connect(self.label.setText)
-        layout = QVBoxLayout()
+        layout = QGridLayout()
         layout.addWidget(self.label1)
-        layout.addWidget(self.label)
-        layout.addWidget(self.input)
-        layout.addWidget(self.button6)
-        layout.addWidget(self.button7)
-        layout.addWidget(self.button8)
-        layout.addWidget(self.time_label)
+        layout.addWidget(self.label1, 0, 0, 1, 8)
+        layout.addWidget(self.label, 6, 0, 1, 6)
+        layout.addWidget(self.input, 4, 0, 3, 8)
+        layout.addWidget(self.button6, 9, 6)
+        layout.addWidget(self.button7, 9, 7)
+        layout.addWidget(self.button8, 9, 8)
+        layout.addWidget(self.time_label, 11, 0, 1, 8)
         self.button8.setCheckable(True)
         self.button6.clicked.connect(self.submit_fill)
         self.button7.clicked.connect(self.next)
@@ -161,7 +163,7 @@ class QuestionFill(QMainWindow):
     ########### Created by Andrey Pautov. 1200km@gmail.com ####################
     def next(self):
         """next question function"""
-        if self.label.text() == "Wrong!" or self.label.text() == "Right!":
+        if self.label.text() == """<b><p style="color:red;">Wrong!</p></b>""" or self.label.text() == """<b><p style="color:green;">Right!</p></b>""":
             self.timer.stop()
             window2.close()
         else:
@@ -173,32 +175,32 @@ class QuestionFill(QMainWindow):
         global wrong_answ
         if num == "Question:17":
             if self.label.text() == "for":
-                self.label.setText("Right!")
+                self.label.setText("""<b><p style="color:green;">Right!</p></b>""")
                 RA_COUNTER += 1
             else:
-                self.label.setText("Wrong!")
+                self.label.setText("""<b><p style="color:red;">Wrong!</p></b>""")
                 wrong_answ.append(17)
         elif num == "Question:40":
             r_a = "\\"
             if self.label.text() == r_a:
-                self.label.setText("Right!")
+                self.label.setText("""<b><p style="color:green;">Right!</p></b>""")
                 RA_COUNTER += 1
             else:
-                self.label.setText("Wrong!")
+                self.label.setText("""<b><p style="color:red;">Wrong!</p></b>""")
                 wrong_answ.append(40)
         elif num == "Question:56":
             if self.label.text() == "R":
-                self.label.setText("Right!")
+                self.label.setText("""<b><p style="color:green;">Right!</p></b>""")
                 RA_COUNTER += 1
             else:
-                self.label.setText("Wrong!")
+                self.label.setText("""<b><p style="color:red;">Wrong!</p></b>""")
                 wrong_answ.append(56)
         elif num == "Question:63":
             if self.label.text() == "man":
-                self.label.setText("Right!")
+                self.label.setText("""<b><p style="color:green;">Right!</p></b>""")
                 RA_COUNTER += 1
             else:
-                self.label.setText("Wrong!")
+                self.label.setText("""<b><p style="color:red;">Wrong!</p></b>""")
                 wrong_answ.append(63)
 
 class EndWindow(QMainWindow):
@@ -206,7 +208,7 @@ class EndWindow(QMainWindow):
     def __init__(self):
         """constructor"""
         super(EndWindow, self).__init__()
-        self.setFixedSize(620, 350)
+        self.setFixedSize(650, 350)
         global RA_COUNTER
         global wrong_answ
         grade = RA_COUNTER * 20
@@ -248,14 +250,14 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.timer = QTimer(self)
         self.timer.setInterval(1000)
-        self.setFixedSize(620, 350)
+        self.setFixedSize(640, 350)
         self.user_answ = []
         self.setWindowTitle(num+"          "+str(all_counter)+"/"+str(var))
         self.label = QLabel(header)
+        self.label.setFont(QFont('Arial', 12))
         self.time_label = QLabel(self)
         self.time_label.setText("Time elapsed: __:__:__")
         self.timer.timeout.connect(self.update_time)
-        self.label.resize(540, 50)
         self.label.setWordWrap(True)
         self.label2 = QLabel("")
         self.body1 = QLabel(body[0][2:])
@@ -280,27 +282,27 @@ class MainWindow(QMainWindow):
         self.button5.resize(20, 20)
         self.button6 = QPushButton("Submit")
         self.button6.resize(100, 40)
-        self.button7 = QPushButton("Next question")
+        self.button7 = QPushButton("Next")
         self.button7.resize(100, 40)
-        self.button8 = QPushButton("Stop and Exit")
+        self.button8 = QPushButton("Exit")
         self.button8.resize(100, 40)
         layout = QGridLayout()
-        layout.addWidget(self.label, 0, 0, 3, 5, alignment=Qt.AlignmentFlag.AlignVCenter)
-        layout.addWidget(self.label2, 3, 0, 1, 3, alignment=Qt.AlignmentFlag.AlignVCenter)
-        layout.addWidget(self.button1, 4, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        layout.addWidget(self.button2, 5, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        layout.addWidget(self.button3, 6, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        layout.addWidget(self.button4, 7, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        layout.addWidget(self.button5, 8, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        layout.addWidget(self.body1, 4, 1, 1, 5)
-        layout.addWidget(self.body2, 5, 1, 1, 5)
-        layout.addWidget(self.body3, 6, 1, 1, 5)
-        layout.addWidget(self.body4, 7, 1, 1, 5)
-        layout.addWidget(self.body5, 8, 1, 1, 5)
-        layout.addWidget(self.button6, 9, 1)
-        layout.addWidget(self.button7, 9, 2)
-        layout.addWidget(self.button8, 9, 3)
-        layout.addWidget(self.time_label,10,1)
+        layout.addWidget(self.label, 0, 0, 3, 8, alignment=Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignTop)
+        layout.addWidget(self.label2, 11, 5, 1, 6)
+        layout.addWidget(self.button1, 2, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.button2, 3, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.button3, 4, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.button4, 5, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.button5, 6, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.body1, 2, 1, 1, 8)
+        layout.addWidget(self.body2, 3, 1, 1, 8)
+        layout.addWidget(self.body3, 4, 1, 1, 8)
+        layout.addWidget(self.body4, 5, 1, 1, 8)
+        layout.addWidget(self.body5, 6, 1, 1, 8)
+        layout.addWidget(self.button6, 9, 6)
+        layout.addWidget(self.button7, 9, 7)
+        layout.addWidget(self.button8, 9, 8)
+        layout.addWidget(self.time_label, 11, 0, 1, 8)
         self.button1.setCheckable(True)
         self.button2.setCheckable(True)
         self.button3.setCheckable(True)
@@ -371,11 +373,11 @@ class MainWindow(QMainWindow):
             self.user_answ.remove(body[4][0])
     def next(self):
         """next question function"""
-        if self.label2.text() == "Wrong!" or self.label2.text() == "Right!":
+        if self.label2.text() == """<b><p style="color:red;">Wrong!</p></b>""" or self.label2.text() == """<b><p style="color:green;">Right!</p></b>""":
             self.timer.stop()
             window.close()
         else:
-            self.label2.setText("""Press "Submit" button first""")
+            self.label2.setText("""<b><p style="color:red;">Press "Submit" button first</p></b>""")
 
     def closeit(self):
         """close app function"""
@@ -388,22 +390,26 @@ class MainWindow(QMainWindow):
         answ = "".join(self.user_answ)
         if len(answ) == len(right_a):
             if answ == right_a:
-                self.label2.setText("Right!")
+                self.label2.setText("""<b><p style="color:green;">Right!</p></b>""")
+                self.label2.setFont(QFont('Arial', 15))
                 RA_COUNTER += 1
             else:
-                self.label2.setText("Wrong!")
+                self.label2.setText("""<b><p style="color:red;">Wrong!</p></b>""")
+                self.label2.setFont(QFont('Arial', 15))
                 wrong_answ.append(i + 1)
         elif len(answ) < len(right_a):
-            self.label2.setText("Chose more answers")
+            self.label2.setText("""<b><p style="color:red;">Chose more answers</p></b>""")
+            self.label2.setFont(QFont('Arial', 15))
         elif len(answ) > len(right_a):
-            self.label2.setText("Choose less answers")
+            self.label2.setText("""<b><p style="color:red;">Chose less answers</p></b>""")
+            self.label.setFont(QFont('Arial', 15))
 
 
 class OpenWindow(QMainWindow):
     """first window class"""
     def __init__(self):
         super(OpenWindow, self).__init__()
-        self.setFixedSize(600, 350)
+        self.setFixedSize(650, 350)
 
         def trainer():
             """open trainer mode function"""
@@ -422,30 +428,30 @@ class OpenWindow(QMainWindow):
             sys.exit()
 
         self.setWindowTitle("LPI exam Simulator")
-        self.label = QLabel("""Welcome to LPI 016-160 exam simulator/trainer
-        created by Andrey Pautov, 1200km@gmail.com""")
+        self.label = QLabel("""Welcome to LPI 010-160 exam simulator/trainer""")
         self.label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+        self.label.setFont(QFont('Arial', 20))
         self.label1 = QLabel(
-            """Trainer mode includes all 80 questions in random sequence. 
-            If you want to open a trainer mode press "Trainer" button""")
-        self.label1.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+            """‣ Trainer mode includes all 80 questions in random sequence. If you want to open a trainer mode press <Trainer> button""")
+        self.label1.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.label1.setWordWrap(True)
-        self.label2 = QLabel("""Exam mode is 40 random questions with time counter. If you want to open a exam mode 
-         press "Exam" button""")
+        self.label2 = QLabel("‣ Exam mode is 40 random questions with time counter. If you want to open a exam mode press <Exam> button")
         self.label2.setWordWrap(True)
+        self.label3 = QLabel('created by Andrey Pautov, 1200km@gmail.com')
         self.button1 = QPushButton("Trainer")
         self.button1.resize(100, 40)
         self.button2 = QPushButton("Exam")
         self.button2.resize(100, 40)
-        self.button3 = QPushButton("Stop and Exit")
+        self.button3 = QPushButton("Exit")
         self.button3.resize(100, 40)
-        layout = QVBoxLayout()
-        layout.addWidget(self.label)
-        layout.addWidget(self.label1)
-        layout.addWidget(self.label2)
-        layout.addWidget(self.button1)
-        layout.addWidget(self.button2)
-        layout.addWidget(self.button3)
+        layout = QGridLayout()
+        layout.addWidget(self.label, 0, 0, 0, 8)
+        layout.addWidget(self.label1, 4, 0, 2, 4)
+        layout.addWidget(self.label2, 6, 0, 2, 6)
+        layout.addWidget(self.button1, 9, 1, 1, 1)
+        layout.addWidget(self.button2, 9, 2)
+        layout.addWidget(self.button3, 9, 3)
+        layout.addWidget(self.label3, 10, 0)
         self.button1.setCheckable(True)
         self.button2.setCheckable(True)
         self.button3.setCheckable(True)
@@ -463,7 +469,7 @@ app.exec()
 
 rangenum = var
 rangelist = list(range(1, rangenum + 1))
-#rangelist = list(range(17, 19))
+#rangelist = list(range(7, 8))
 random.shuffle(rangelist)
 filllist = [17, 40, 56, 63]
 for i in rangelist:
