@@ -468,9 +468,10 @@ window3.show()
 app.exec()
 
 rangenum = var
-rangelist = list(range(1, rangenum + 1))
+rangelist = list(range(1, 81))
 #rangelist = list(range(7, 8))
 random.shuffle(rangelist)
+rangelist = rangelist[0:(rangenum+1)]
 filllist = [17, 40, 56, 63]
 for i in rangelist:
     if i in filllist:

@@ -623,8 +623,8 @@ Explanation/Reference:
 
 68
 The file script.sh in the current directory contains the following content:  <br> #!/bin/bash <br> echo $MYVAR <br>
-The following commands are used to execute this script:  <code>MYVAR=value / ./script.sh</code>
-The result is an empty line instead of the content of the variable MYVAR. How should MYVAR be set in order to make script.sh display the content of MYVAR?
+The following commands are used to execute this script:  <code>MYVAR=value / ./script.sh </code>
+The result is an empty line instead of the content of the variable MYVAR. How should MYVAR <br> be set in order to make script.sh display the content of MYVAR?
 A. !MYVAR=value
 B. env MYVAR=value
 C. MYVAR=value
